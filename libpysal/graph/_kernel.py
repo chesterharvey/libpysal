@@ -79,6 +79,7 @@ def _kernel(
     p=2,
     taper=True,
     coincident="raise",
+    seed=None,
 ):
     """
     Compute a kernel function over a distance matrix.
@@ -206,7 +207,7 @@ def _kernel(
     return _resolve_islands(heads, tails, ids, weights)
 
 
-def _knn(coordinates, metric="euclidean", k=1, p=2, coincident="raise"):
+def _knn(coordinates, metric="euclidean", k=1, p=2, coincident="raise", seed=None):
     """internal function called only within _kernel, never directly to build KNN"""
     coordinates, ids, geoms = _validate_geometry_input(
         coordinates, ids=None, valid_geometry_types=_VALID_GEOMETRY_TYPES
@@ -247,7 +248,7 @@ def _knn(coordinates, metric="euclidean", k=1, p=2, coincident="raise"):
         if coincident == "jitter":
             # force re-jittering over and over again until the coincidence is broken
             return _knn(
-                _jitter_geoms(coordinates, geoms)[-1],
+                _jitter_geoms(coordinates, geoms, seed)[-1],
                 metric=metric,
                 k=k,
                 p=p,

@@ -494,7 +494,7 @@ class Graph(SetOpsMixin):
         return cls.from_arrays(head, tail, weight)
 
     @classmethod
-    def build_knn(cls, data, k, metric="euclidean", p=2, coincident="raise"):
+    def build_knn(cls, data, k, metric="euclidean", p=2, coincident="raise", seed=None):
         """Generate Graph from geometry data based on k-nearest neighbors search
 
         Parameters
@@ -537,6 +537,7 @@ class Graph(SetOpsMixin):
             p=p,
             ids=ids,
             coincident=coincident,
+            seed=seed,
         )
 
         return cls.from_arrays(head, tail, weight)
